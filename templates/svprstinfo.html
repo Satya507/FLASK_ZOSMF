@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Passer Automation Tools</title>
+    <style>
+        .alert-danger {
+            color: red;
+            /* Change the color to your desired value */
+            font-size: 20px;
+            margin-bottom: 10px;
+            /* Adjust the margin as needed */
+        }
+
+        h3 {
+            font-size: 21px;
+            /* Adjust the font size as needed */
+            margin-bottom: 10px;
+            /* Adjust the margin as needed */
+        }
+
+        p,
+        h4,
+        input {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+        }
+
+        .sub {
+            font-size: 15px;
+            /* Adjust the font size as needed */
+        }
+
+        select {
+            font-size: 16px;
+            /* Adjust the font size as needed */
+            margin-left: 2px;
+            width: 70px;
+        }
+
+        .custom-select {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            margin-left: 32px;
+        }
+
+        /* Your existing CSS styles */
+        .restart-field {
+            display: none;
+            /* Initially hide the field */
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            margin-left: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h3>Please verify if you are only one running svp today,
+            If not determine if same cycle or not. Please contact
+            Bill incase any doubt
+        </h3>
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger">
+            {{ message | safe }}
+        </div>
+        {% endfor %}
+        <form action="#" method="post">
+            <div class="custom-select">
+                <label for="restart-select">ARE YOU RESTARTING</label>
+                <select id="restart-select" name="rst" onchange="toggleRestartReason()">
+                    <option value="">Select</option>
+                    <option value="y">Y</option>
+                    <option value="n">N</option>
+                </select>
+            </div>
+            <div class="restart-field" id="restart-who">
+                <label for="rwho">FOR WHOM RESTARTING</label>
+                <select id="rwho" name="fu" required>
+                    <option value="bjv">BJV</option>
+                    <option value="s1s">S1S</option>
+                    <option value="smm">SMM</option>
+                    <option value="smm">SEA</option>
+                    <option value="smm">JEB</option>
+                    <option value="smm">M3H</option>
+                </select>
+            </div>
+
+            <p><input class="sub" type="submit" value="submit" /></p>
+        </form>
+    </center>
+    <script>
+        function toggleRestartReason() {
+            var selectElement = document.getElementById("restart-select");
+            var restartField = document.getElementById("restart-who");
+
+            if (selectElement.value === "y") {
+                restartField.style.display = "block"; // Show the field if "Y" is selected
+            } else {
+                restartField.style.display = "none";  // Hide the field if "N" or no option is selected
+            }
+        }
+        // Disable Back and Forward navigation
+        history.pushState(null, null, window.location.href);  // Add an entry to the history
+        window.onpopstate = function () {
+            history.go(1);  // Force the browser to move forward when a back navigation is attempted
+        };
+        // You can also reset the history each time to prevent forward navigation
+        window.onload = function () {
+            history.pushState(null, null, window.location.href);  // Overwrite the current history state
+        };
+    </script>
+</body>
+
+</html>

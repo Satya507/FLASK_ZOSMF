@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Passer Automation Tools</title>
+    <style>
+        .alert-danger {
+            color: red;
+            /* Change the color to your desired value */
+            font-size: 20px;
+            margin-bottom: 10px;
+            /* Adjust the margin as needed */
+            margin-left: -44px;
+        }
+
+        h3 {
+            font-size: 35px;
+            /* Adjust the font size as needed */
+            margin-bottom: 10px;
+            /* Adjust the margin as needed */
+            margin-left: 49px;
+        }
+
+        .cyl-div {
+            font-size: 18px;
+            margin-bottom: 5px;
+            /* Adjust the value as needed */
+            margin-left: -48px;
+        }
+
+        .db-div {
+            font-size: 18px;
+            margin-bottom: 1px;
+            /* Adjust the value as needed */
+            margin-left: -48px;
+        }
+
+        select,
+        option {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            width: 153px;
+            padding: 2px 3px;
+            /* Adjust the padding as needed */
+            margin: 0;
+            /* Remove margins */
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            /* Prevent wrapping */
+        }
+
+        .inp {
+            font-size: 16px;
+            /* Adjust the font size as needed */
+            width: 146px;
+            margin-left: 0px;
+        }
+
+        select {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            /* Prevent wrapping */
+        }
+
+        p {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            margin-left: 49px;
+        }
+
+        td {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+        }
+
+        .tbl {
+            margin-left: 12px;
+            /* Adjust the font size as needed */
+        }
+
+        input {
+            font-size: 12px;
+            /* Adjust the font size as needed */
+        }
+
+        .sub {
+            font-size: 16px;
+            /* Adjust the font size as needed */
+            margin-left: -110px;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h3>WELCOME TO SVP RESTART</h3>
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger">
+            {{ message | safe }}
+        </div>
+        {% endfor %}
+        <form action="#" method="post">
+            <div class="cyl-div">
+                <select name="cyl">
+                    <option value="">SELECT CYL</option>
+                    <option value="j" {% if op3=='j' %}selected{% endif %}>J</option>
+                    <option value="b" {% if op3=='b' %}selected{% endif %}>B</option>
+                    <option value="h" {% if op3=='h' %}selected{% endif %}>H</option>
+                    <option value="3" {% if op3=='3' %}selected{% endif %}>3</option>
+                </select>
+            </div>
+            <div class="db-div">
+                <select name="db">
+                    <option value="">SELECT DB</option>
+                    <option value="tvp" {% if op4=='tvp' %}selected{% endif %}>TVP</option>
+                    <option value="tb0" {% if op4=='tb0' %}selected{% endif %}>TB0</option>
+                    <option value="tb4" {% if op4=='tb4' %}selected{% endif %}>TB4</option>
+                </select>
+            </div>
+            <table class="tbl">
+                <tr>
+                    <td>EMAIL:</td>
+                    <td><input class="inp" type="text" name="email" value="{{ email }}" maxlength="36" required> E.G.
+                        SATYABRATA.SWAIN</td>
+                </tr>
+                <tr>
+                    <td>RESTART DETAIL:</td>
+                    <td><input class="inp" type="text" name="rd" value="{{ rd }}" maxlength="8" required
+                            style="color: blue;"></td>
+                </tr>
+            </table>
+
+            <p><input class="sub" type="submit" value="submit" /></p>
+        </form>
+    </center>
+    <script>
+        // Disable Back and Forward navigation
+        history.pushState(null, null, window.location.href);  // Add an entry to the history
+        window.onpopstate = function () {
+            history.go(1);  // Force the browser to move forward when a back navigation is attempted
+        };
+        // You can also reset the history each time to prevent forward navigation
+        window.onload = function () {
+            history.pushState(null, null, window.location.href);  // Overwrite the current history state
+        };
+    </script>
+</body>
+
+</html>

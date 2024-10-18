@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Passer Automation Tools</title>
+    <style>
+        .alert-danger {
+            color: red;
+            /* Change the color to your desired value */
+            font-size: 20px;
+            margin-bottom: 10px;
+            /* Adjust the margin as needed */
+            margin-left: 100px;
+        }
+
+        .alert-success {
+            color: green;
+            /* Change the color to your desired value */
+            font-size: 20px;
+            margin-bottom: 10px;
+            /* Adjust the margin as needed */
+            margin-left: 100px;
+        }
+
+        h3 {
+            font-size: 35px;
+            /* Adjust the font size as needed */
+            margin-bottom: 10px;
+            /* Adjust the margin as needed */
+            margin-left: 75px;
+        }
+
+        .select-div {
+            margin-left: 97px;
+            /* Adjust the value as needed */
+            margin-bottom: 10px;
+        }
+
+        select,
+        option {
+            font-size: 18px;
+            /* Adjust the font size as needed */
+            width: 153px;
+            padding: 2px 3px;
+            /* Adjust the padding as needed */
+            margin: 0;
+            /* Remove margins */
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            /* Prevent wrapping */
+        }
+
+        select {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            /* Prevent wrapping */
+        }
+
+        p {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            margin-left: 49px;
+        }
+
+        td {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+        }
+
+        input {
+            font-size: 12px;
+            /* Adjust the font size as needed */
+        }
+
+        .sub {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            margin-left: 45px;
+        }
+
+        .id {
+            font-size: 18px;
+            /* Adjust the font size as needed */
+        }
+
+        .pw {
+            font-size: 18px;
+            /* Adjust the font size as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h3>WELCOME TO MYTOOLS</h3>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message | safe }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form action="#" method="post">
+            <div class="select-div">
+                <select name="nm">
+                    <option value="">SELECT TOOL</option>
+                    <option value="autosvp" {% if op=='autosvp' %}selected{% endif %}>AUTOSVP</option>
+                    <option value="ccbld" {% if op=='ccbld' %}selected{% endif %}>CCBLD</option>
+                </select>
+            </div>
+
+            <p><input class="sub" type="submit" value="submit" /></p>
+        </form>
+    </center>
+    <script>
+        // Disable Back and Forward navigation
+        history.pushState(null, null, window.location.href);  // Add an entry to the history
+        window.onpopstate = function () {
+            history.go(1);  // Force the browser to move forward when a back navigation is attempted
+        };
+
+        // You can also reset the history each time to prevent forward navigation
+        window.onload = function () {
+            history.pushState(null, null, window.location.href);  // Overwrite the current history state
+        };
+    </script>
+</body>
+
+</html>

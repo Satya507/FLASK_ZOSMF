@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Passer Automation Tools</title>
+    <style>
+        .alert-danger {
+            color: red;
+            /* Change the color to your desired value */
+            font-size: 20px;
+            margin-bottom: 10px;
+            /* Adjust the margin as needed */
+            margin-left: -44px;
+        }
+
+        h3 {
+            font-size: 35px;
+            /* Adjust the font size as needed */
+            margin-bottom: 10px;
+            /* Adjust the margin as needed */
+            margin-left: 49px;
+        }
+
+        .cyl-div {
+            font-size: 18px;
+            margin-bottom: 5px;
+            /* Adjust the value as needed */
+            margin-left: -48px;
+        }
+
+        .db-div {
+            font-size: 18px;
+            margin-bottom: 1px;
+            /* Adjust the value as needed */
+            margin-left: -48px;
+        }
+
+        select,
+        option {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            width: 153px;
+            padding: 2px 3px;
+            /* Adjust the padding as needed */
+            margin: 0;
+            /* Remove margins */
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            /* Prevent wrapping */
+        }
+
+        .inp {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            width: 144px;
+            padding: 2px 3px;
+            /* Adjust the padding as needed */
+            margin: 0;
+            /* Remove margins */
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            /* Prevent wrapping */
+        }
+
+        select,
+        .inp {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            /* Prevent wrapping */
+        }
+
+        p {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            margin-left: 49px;
+        }
+
+        td {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+        }
+
+        input {
+            font-size: 12px;
+            /* Adjust the font size as needed */
+        }
+
+        .sub {
+            font-size: 16px;
+            /* Adjust the font size as needed */
+            margin-left: -130px;
+        }
+
+        .cal {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            margin-left: -107px;
+        }
+
+        .pcal {
+            font-size: 16px;
+            width: 149px;
+            /* Adjust the font size as needed */
+            margin-left: 0px;
+        }
+
+        #calendar-input1 {
+            font-size: 17px;
+        }
+
+        #calendar-input2 {
+            font-size: 14px;
+        }
+
+        #clock-input {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h3>WELCOME TO SVP AUTOMATION</h3>
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger">
+            {{ message | safe }}
+        </div>
+        {% endfor %}
+        <form action="#" method="post">
+            <div class="cyl-div">
+                <select name="cyl">
+                    <option value="">SELECT CYL</option>
+                    <option value="j" {% if op1=='j' %}selected{% endif %}>J</option>
+                    <option value="b" {% if op1=='b' %}selected{% endif %}>B</option>
+                    <option value="h" {% if op1=='h' %}selected{% endif %}>H</option>
+                    <option value="3" {% if op1=='3' %}selected{% endif %}>3</option>
+                </select>
+            </div>
+            <div class="db-div">
+                <select name="db">
+                    <option value="">SELECT DB</option>
+                    <option value="tvp" {% if op2=='tvp' %}selected{% endif %}>TVP</option>
+                    <option value="tb0" {% if op2=='tb0' %}selected{% endif %}>TB0</option>
+                    <option value="tb4" {% if op2=='tb4' %}selected{% endif %}>TB4</option>
+                </select>
+            </div>
+            <table>
+                <tr>
+                    <td>EMAIL:</td>
+                    <td><input class="inp" type="text" name="email" value="{{ email }}" maxlength="36" required> E.G.
+                        SATYABRATA.SWAIN</td>
+                </tr>
+                <tr>
+                    <td>REQUEST:</td>
+                    <td><input class="inp" type="text" name="req" value="{{ req }}" maxlength="8" required> E.G.
+                        S0002882</td>
+                </tr>
+                <tr>
+                    <td>CONFIG:</td>
+                    <td><input class="inp" type="text" name="conf" value="{{ conf }}" maxlength="3" required> E.G. CJ3,
+                        CB1 etc..
+                    </td>
+                </tr>
+                <tr>
+                    <td>PASSER RUN DATE:</td>
+                    <td><input class=pcal type="date" id="calendar-input1" name="pcalin"
+                            value="{{ pcalin }}" required>
+                    </td>
+                </tr>
+            </table>
+            <label class="cal" for="calendar-input2">DATE:</label>
+            <input class="inp" type="date" id="calendar-input2" name="calin" value="{{ calin }}">
+            <label for="clock-input">TIME:</label>
+            <input class="inp" type="time" id="clock-input" name="cloin" value="{{ cloin }}">
+            <p><input class="sub" type="submit" value="submit" /></p>
+        </form>
+    </center>
+    <script>
+        // Disable Back and Forward navigation
+        history.pushState(null, null, window.location.href);  // Add an entry to the history
+        window.onpopstate = function () {
+            history.go(1);  // Force the browser to move forward when a back navigation is attempted
+        };
+        // You can also reset the history each time to prevent forward navigation
+        window.onload = function () {
+            history.pushState(null, null, window.location.href);  // Overwrite the current history state
+        };
+    </script>
+</body>
+
+</html>

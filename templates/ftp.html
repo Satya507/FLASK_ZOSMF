@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Passer Automation Tools</title>
+    <style>
+        .alert-danger {
+            color: red;
+            font-size: 20px;
+            margin-bottom: 10px;
+            margin-left: 96px;
+        }
+
+        h3 {
+            font-size: 35px;
+            /* Adjust the font size as needed */
+            margin-bottom: 10px;
+            /* Adjust the margin as needed */
+            margin-left: 96px;
+        }
+
+        .inp {
+            font-size: 17px;
+            width: 300px;
+            /* Adjust the font size as needed */
+            margin-left: 10px;
+        }
+
+        .inp1 {
+            font-size: 17px;
+            width: 280px;
+            /* Adjust the font size as needed */
+            margin-left: 10px;
+        }
+
+        .inp2 {
+            font-size: 17px;
+            width: 60px;
+            /* Adjust the font size as needed */
+            margin-left: 10px;
+        }
+
+        p {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            margin-left: 49px;
+        }
+
+        table {
+            margin-left: 200px;
+        }
+
+        td {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+        }
+
+        .sub {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            margin-left: -20px;
+        }
+
+        .cal {
+            font-size: 17px;
+            /* Adjust the font size as needed */
+            margin-left: -74px;
+        }
+
+        .pcal {
+            font-size: 16px;
+            width: 149px;
+            /* Adjust the font size as needed */
+            margin-left: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h3>WELCOME TO FTP PAGE</h3>
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger">
+            {{ message | safe }}
+        </div>
+        {% endfor %}
+        <form action="#" method="POST" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <td>UPLOAD YOUR FILE:</td>
+                    <td>
+                        <input class="inp" type="file" name="file" id="fileInput" required>
+                        <span class="file-name"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MAINFRAME DATASET NAME:</td>
+                    <td><input class="inp1" type="text" name="md" value="{{ md }}" maxlength="44" required></td>
+                </tr>
+                <tr>
+                    <td>MAINFRAME DATASET LENGTH:</td>
+                    <td><input class="inp2" type="number" name="mdl" value="{{ mdl }}" maxlength="3" required></td>
+                </tr>
+            </table>
+            <p><input class="sub" type="submit" value="submit" /></p>
+        </form>
+    </center>
+</body>
+
+</html>

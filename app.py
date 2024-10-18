@@ -65,7 +65,7 @@ def login():
                 }
         response = requests.post(url, headers=headers, verify=False)
         if response.status_code != 200:
-            err="INVALID USER/PASSWORD"
+            err="INVALID USER/PASSWORD!"
             err1=""
             err=err+"<br>"+err1
             flash(err, category="danger")
@@ -91,7 +91,7 @@ def mytools():
         if tool.strip()=="autosvp":
             return redirect(url_for("svprstinfo"))
         else:
-            return render_template("mytools.html")
+            return redirect(url_for("pftp"))
     else:
         jid=request.args.get("jid")
         jnm=request.args.get("jnm")
@@ -341,7 +341,68 @@ def svprst():
         rd=res2.text
         rd=rd.upper()
         return render_template("svprst.html", op3='', op4='', email='', rd=rd, error=None)
-        
+
+@app.route("/pftp", methods=["GET", "POST"])
+def pftp():
+    headers1 = {
+              "X-CSRF-ZOSMF-HEADER": "dummy",
+              "Accept": "application/json",
+              "Content-Type": "text/plain"
+            }
+    headers2 = {
+                 "X-CSRF-ZOSMF-HEADER": "dummy",
+                 "Accept": "application/json",
+                 "Content-Type": "application/json"
+            }
+    user = session.get('user')
+    pwd = session.get('pwd')
+    auth = (user, pwd)
+    err=None
+    if request.method=="POST":
+       file = request.files['file']
+       md=request.form["md"]
+       md=md.upper()
+       mdl = request.form.get("mdl").strip()
+       mdl=int(mdl)
+       if file.filename[-4:] != '.txt':
+           err="INVALID FILE TYPE, ONLY .txt TYPE SUPPORTED!"
+           err1=""
+           err=err+"<br>"+err1
+           flash(err)
+           return render_template("ftp.html", md=md, mdl=mdl, error=err)
+       if mdl==0:
+           err="THE LENGTH CAN'T BE 0"
+           err1=""
+           err=err+"<br>"+err1
+           flash(err)
+           return render_template("ftp.html", md=md, mdl=mdl, error=err)
+       data={"dsorg":"PS","alcunit":"CYL","primary":100,
+            "secondary":50,"avgblk":500,"recfm":"FB","blksize":0,"lrecl":mdl}
+       burl = "https://204.90.115.200:10443/zosmf"
+       iurl="/restfiles/ds/"+md
+       url=burl+iurl
+       res = requests.post(url, json=data, headers=headers2, auth=auth, verify=False)
+       if res.status_code > 204:
+           jnm=res.reason
+           jid=res.status_code
+           fd=f"FTP  ERROR: REASON: {jnm} WITH RETURN-CODE: {jid}"
+           return redirect(url_for("mytools", jnm=jnm, jid=jid, fd=fd))
+       time.sleep(5)
+       iurl="/restfiles/ds/"+md
+       url=burl+iurl
+       file_data = file.read().decode('utf-8')
+       res1 = requests.put(url, data=file_data, headers=headers1, auth=auth, verify=False)
+       if res1.status_code > 204:
+          jnm=res1.reason
+          jid=res1.status_code
+          fd=f"FTP  ERROR: REASON: {jnm} WITH RETURN-CODE: {jid}"
+          return redirect(url_for("mytools", jnm=jnm, jid=jid, fd=fd))
+       
+       fd= f"FTP DONE SUCCESFULLY TO {md}"
+       return redirect(url_for("mytools", jnm='', jid='', fd=fd))
+    else:
+       return render_template("ftp.html")
+       
 
 # @app.route("/finalmsg")
 # def finalmsg():

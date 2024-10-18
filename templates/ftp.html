@@ -105,6 +105,17 @@
             <p><input class="sub" type="submit" value="submit" /></p>
         </form>
     </center>
+    <script>
+        // Disable Back and Forward navigation
+        history.pushState(null, null, window.location.href);  // Add an entry to the history
+        window.onpopstate = function () {
+            history.go(1);  // Force the browser to move forward when a back navigation is attempted
+        };
+        // You can also reset the history each time to prevent forward navigation
+        window.onload = function () {
+            history.pushState(null, null, window.location.href);  // Overwrite the current history state
+        };
+    </script>
 </body>
 
 </html>

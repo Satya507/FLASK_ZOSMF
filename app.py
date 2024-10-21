@@ -383,19 +383,24 @@ def pftp():
        url=burl+iurl
        res = requests.post(url, json=data, headers=headers2, auth=auth, verify=False)
        if res.status_code > 204:
-           jnm=res.reason
-           jid=res.status_code
-           fd=f"FTP  ERROR: REASON: {jnm} WITH RETURN-CODE: {jid}"
-           return redirect(url_for("mytools", jnm=jnm, jid=jid, fd=fd))
+           jnm=res.json()
+           rc=jnm["rc"]
+           if int(rc) != -26868:
+                jnm=jnm["message"]
+                jid=res.status_code
+                fd=f"FTP    ERROR: REASON: {jnm} WITH RETURN-CODE: {jid}"
+                return redirect(url_for("mytools", jnm=jnm, jid=jid, fd=fd))
        time.sleep(5)
+       print("fff")
        iurl="/restfiles/ds/"+md
        url=burl+iurl
        file_data = file.read().decode('utf-8')
        res1 = requests.put(url, data=file_data, headers=headers1, auth=auth, verify=False)
        if res1.status_code > 204:
-          jnm=res1.reason
+          jnm=res1.json()
+          jnm=jnm["message"]
           jid=res1.status_code
-          fd=f"FTP  ERROR: REASON: {jnm} WITH RETURN-CODE: {jid}"
+          fd=f"FTP    ERROR: REASON: {jnm} WITH RETURN-CODE: {jid}"
           return redirect(url_for("mytools", jnm=jnm, jid=jid, fd=fd))
        
        fd= f"FTP DONE SUCCESFULLY TO {md}"
